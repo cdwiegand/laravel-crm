@@ -44,7 +44,7 @@ class EmailRepository extends Repository
 
         $authUser = auth()->guard('user')->user();
         $fromEmail = $authUser->email ?? config('mail.from.address');
-        # $fromEmail = explode('@', $fromEmail,2)[0].'@'.config('mail.domain');
+        // $fromEmail = explode('@', $fromEmail,2)[0].'@'.config('mail.domain');
 
         $data = $this->sanitizeEmails(array_merge([
             'source'        => 'web',
