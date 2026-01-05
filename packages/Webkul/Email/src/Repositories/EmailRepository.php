@@ -42,9 +42,13 @@ class EmailRepository extends Repository
             $referenceIds = $parent->reference_ids ?? [];
         }
 
+        $authUser = auth()->guard('user')->user();
+        $fromEmail = $authUser->email ?? config('mail.from.address');
+        # $fromEmail = explode('@', $fromEmail,2)[0].'@'.config('mail.domain');
+
         $data = $this->sanitizeEmails(array_merge([
             'source'        => 'web',
-            'from'          => config('mail.from.address'),
+            'from'          => $fromEmail,
             'user_type'     => 'admin',
             'folders'       => isset($data['is_draft']) ? ['draft'] : ['outbox'],
             'unique_id'     => $uniqueId,
